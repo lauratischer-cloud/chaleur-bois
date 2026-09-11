@@ -104,27 +104,33 @@ class HeaderMenu extends Component {
     const previouslyActiveItem = this.#state.activeItem;
 
     if (previouslyActiveItem) {
-      // Force-hide the outgoing submenu immediately instead of letting its
-      // opacity fade out. Submenus are stacked at the same absolute position,
-      // so when switching directly between items the outgoing fade could
-      // overlap the incoming submenu's fade-in, producing a visible "double
-      // exposure" of both menus' content — most noticeable moving quickly
-      // between menus of different sizes. The graceful fade is still used
-      // when the whole menu closes (see #deactivate), just not mid-switch.
-      const previousSubmenu = findSubmenu(previouslyActiveItem);
-      const previousSubmenuInner = previousSubmenu?.querySelector('.menu-list__submenu-inner');
-      if (previousSubmenu && previousSubmenuInner) {
-        previousSubmenu.style.visibility = 'hidden';
-        previousSubmenuInner.style.transition = 'none';
-        previousSubmenuInner.style.opacity = '0';
-        requestAnimationFrame(() => {
-          previousSubmenu.style.visibility = '';
-          previousSubmenuInner.style.transition = '';
-          previousSubmenuInner.style.opacity = '';
-        });
-      }
-
       previouslyActiveItem.ariaExpanded = 'false';
+    }
+
+    // Force-hide any other submenu that might still be visible or fading out
+    // instead of letting its opacity animate to 0. Submenus are stacked at the
+    // same absolute position, so an outgoing fade overlapping the incoming
+    // submenu's fade-in produces a visible "double exposure" of both menus'
+    // content when switching quickly. We can't rely solely on tracking
+    // `previouslyActiveItem` for this: a fast pointer sweep fires pointerleave
+    // (running #deactivate, which already clears that state) just before
+    // pointerenter on the next item, so the outgoing submenu is found by
+    // querying the DOM directly instead. The graceful fade is still used when
+    // the whole menu closes with nothing new taking its place (see
+    // #deactivate), just not mid-switch.
+    const targetSubmenu = findSubmenu(item);
+    for (const otherSubmenu of this.querySelectorAll('.menu-list__submenu')) {
+      if (otherSubmenu === targetSubmenu) continue;
+      const otherSubmenuInner = otherSubmenu.querySelector('.menu-list__submenu-inner');
+      if (!otherSubmenuInner) continue;
+      otherSubmenu.style.visibility = 'hidden';
+      otherSubmenuInner.style.transition = 'none';
+      otherSubmenuInner.style.opacity = '0';
+      requestAnimationFrame(() => {
+        otherSubmenu.style.visibility = '';
+        otherSubmenuInner.style.transition = '';
+        otherSubmenuInner.style.opacity = '';
+      });
     }
 
     this.#state.activeItem = item;
