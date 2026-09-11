@@ -22,6 +22,14 @@ class HeaderMenu extends Component {
    */
   #submenuMutationObserver = null;
 
+  /**
+   * Keeps --submenu-height in sync with the submenu's real rendered size for as
+   * long as it stays open, catching layout changes the mutation observer can't
+   * see (an image finishing loading, a webfont swap reflowing a wrapped label).
+   * @type {ResizeObserver | null}
+   */
+  #submenuResizeObserver = null;
+
   connectedCallback() {
     super.connectedCallback();
 
@@ -35,6 +43,7 @@ class HeaderMenu extends Component {
     window.removeEventListener('resize', this.#resizeListener);
     this.overflowMenu?.removeEventListener('pointerleave', this.#overflowSubmenuListener);
     this.#cleanupMutationObserver();
+    this.#cleanupResizeObserver();
   }
 
   /**
@@ -113,8 +122,9 @@ class HeaderMenu extends Component {
       // Mark submenu as active for content-visibility optimization
       submenu.dataset.active = '';
 
-      // Cleanup any existing mutation observer from previous menu activations
+      // Cleanup any existing mutation/resize observers from previous menu activations
       this.#cleanupMutationObserver();
+      this.#cleanupResizeObserver();
 
       // Monitor DOM mutations to catch deferred content injection (from section hydration)
       this.#submenuMutationObserver = new MutationObserver(() => {
@@ -134,6 +144,20 @@ class HeaderMenu extends Component {
       setTimeout(() => {
         this.#cleanupMutationObserver();
       }, 500);
+
+      // Mutations alone miss layout changes that grow the submenu without adding
+      // or removing nodes (an image finishing loading, a wrapped label reflowing
+      // after a webfont swap). Left unhandled, --submenu-height stays too small
+      // for the submenu's real content, so the underlay/backdrop falls short and
+      // the page behind shows through the open menu. Stay subscribed for as long
+      // as this submenu is active so any such change is picked up immediately.
+      this.#submenuResizeObserver = new ResizeObserver(() => {
+        if (submenu.offsetHeight > 0) {
+          this.headerComponent?.style.setProperty('--submenu-height', `${submenu.offsetHeight}px`);
+          this.#setFullOpenHeaderHeight(submenu.offsetHeight);
+        }
+      });
+      this.#submenuResizeObserver.observe(submenu);
     }
 
     let finalHeight = submenu?.offsetHeight || 0;
@@ -189,6 +213,9 @@ class HeaderMenu extends Component {
 
     // Don't deactivate if the overflow menu or overflow list is still being hovered
     if (this.overflowListHovered || this.overflowMenu?.matches(':hover')) return;
+
+    this.#cleanupMutationObserver();
+    this.#cleanupResizeObserver();
 
     this.headerComponent?.style.setProperty('--submenu-height', '0px');
     this.#setFullOpenHeaderHeight(0);
@@ -264,6 +291,11 @@ class HeaderMenu extends Component {
   #cleanupMutationObserver() {
     this.#submenuMutationObserver?.disconnect();
     this.#submenuMutationObserver = null;
+  }
+
+  #cleanupResizeObserver() {
+    this.#submenuResizeObserver?.disconnect();
+    this.#submenuResizeObserver = null;
   }
 }
 
