@@ -104,6 +104,26 @@ class HeaderMenu extends Component {
     const previouslyActiveItem = this.#state.activeItem;
 
     if (previouslyActiveItem) {
+      // Force-hide the outgoing submenu immediately instead of letting its
+      // opacity fade out. Submenus are stacked at the same absolute position,
+      // so when switching directly between items the outgoing fade could
+      // overlap the incoming submenu's fade-in, producing a visible "double
+      // exposure" of both menus' content — most noticeable moving quickly
+      // between menus of different sizes. The graceful fade is still used
+      // when the whole menu closes (see #deactivate), just not mid-switch.
+      const previousSubmenu = findSubmenu(previouslyActiveItem);
+      const previousSubmenuInner = previousSubmenu?.querySelector('.menu-list__submenu-inner');
+      if (previousSubmenu && previousSubmenuInner) {
+        previousSubmenu.style.visibility = 'hidden';
+        previousSubmenuInner.style.transition = 'none';
+        previousSubmenuInner.style.opacity = '0';
+        requestAnimationFrame(() => {
+          previousSubmenu.style.visibility = '';
+          previousSubmenuInner.style.transition = '';
+          previousSubmenuInner.style.opacity = '';
+        });
+      }
+
       previouslyActiveItem.ariaExpanded = 'false';
     }
 
