@@ -532,7 +532,12 @@
 
   .header-section {
     position: relative;
-    z-index: var(--layer-heightened);
+    /* Must stay at or above --layer-sticky so the header (and its menu drawer)
+       always renders above elements explicitly placed just below it, like the
+       sticky add-to-cart bar (see product-information.liquid). Using a lower
+       value here let that bar float on top of an open mobile menu once the
+       page was scrolled and the header wasn't in its "active sticky" state. */
+    z-index: var(--layer-sticky);
     border-bottom: 1px solid #e5e5e5;
   }
 
