@@ -314,6 +314,17 @@
     margin-bottom: calc(-1 * var(--header-padding));
   }
 
+  /* Widen the hoverable area above each top-level item (invisible, doesn't affect
+     layout) so a fast pointer movement is more likely to land on it and trigger
+     the menu — a fast swipe can otherwise skip a hover target entirely if the
+     browser's pointer-position sampling never lands inside its bounds. */
+  .menu-list__list-item:not([slot='overflow'])::before {
+    content: '';
+    width: 100%;
+    height: var(--padding-md);
+    margin-top: calc(-1 * var(--padding-md));
+  }
+
   [slot='overflow'] > .menu-list__link::after {
     content: none;
   }
