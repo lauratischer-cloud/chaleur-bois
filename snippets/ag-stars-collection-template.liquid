@@ -1,0 +1,20 @@
+{% assign count_review = 0  %}
+{% assign tmp_total_review = 0  %}
+{% assign average_review = 0  %}
+
+
+{% assign reviews = product.metafields.reviews  %}
+{% if shop.locale != "fr"  %}
+{% assign lang = "avisgarantis_" | append: shop.locale  %}
+{% else %}
+{% assign lang = "avisgarantis"  %}
+{% endif %}
+{% for review in reviews[lang]  %}
+	{% assign count_review = count_review | plus: 1 %}
+	{% assign tmp_total_review = tmp_total_review | plus: review.review_rating %}
+{% endfor %}
+{% assign count_review_float = count_review | times: 1.0 %}
+{% assign average_review =  tmp_total_review | divided_by: count_review_float | round: 1 %}
+{% if shop.metafields.avisgarantis.collectionTitleWidget == 'enable' %}
+<div class="grc-category-stars" data-product-id="{{card_product.id | json}}"></div>
+{% endif %}

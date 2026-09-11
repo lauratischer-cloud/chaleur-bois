@@ -1,0 +1,108 @@
+{% liquid
+  assign max_display = 3
+  assign current_handle = collection.handle | default: ''
+%}
+
+<div class="related-collections">
+  <div class="related-collections__grid">
+    {%- assign displayed = 0 -%}
+
+    {%- for col in collections -%}
+      {%- unless col.handle == current_handle or col.handle == 'frontpage' -%}
+        {%- if displayed < max_display -%}
+
+          <a href="{{ col.url }}" class="related-collections__item">
+            <div class="related-collections__image-wrapper">
+              {%- if col.image -%}
+                <img
+                  src="{{ col.image | img_url: '600x800', crop: 'center' }}"
+                  alt="{{ col.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="800"
+                >
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag: 'related-collections__placeholder' }}
+              {%- endif -%}
+            </div>
+            <span class="related-collections__title">{{ col.title }}</span>
+          </a>
+
+          {%- assign displayed = displayed | plus: 1 -%}
+        {%- endif -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .related-collections__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .related-collections__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .related-collections__image-wrapper {
+    overflow: hidden;
+    border-radius: 4px;
+    aspect-ratio: 3 / 4;
+  }
+
+  .related-collections__image-wrapper img,
+  .related-collections__image-wrapper svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .related-collections__item:hover img {
+    transform: scale(1.04);
+  }
+
+  .related-collections__title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .related-collections__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const grid = document.querySelector('.related-collections__grid');
+    if (!grid) return;
+
+    const items = Array.from(grid.children);
+
+    // Fisher-Yates shuffle
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      grid.appendChild(items[j]);
+      items.splice(j, 1);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collections suggérées",
+  "settings": [],
+  "presets": [{ "name": "Collections suggérées" }]
+}
+{% endschema %}

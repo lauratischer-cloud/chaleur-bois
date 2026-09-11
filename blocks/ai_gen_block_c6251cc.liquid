@@ -1,0 +1,434 @@
+{% doc %}
+  @prompt
+    je veux un bloc de réassurance paiement en plusieurs fois avec Alma x2, x3, x4 et x10 ou à la livraison. Rajouter le logo de Alma à côté
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-alma-payment-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+  }
+
+  .ai-alma-payment-container-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.spacing }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-alma-payment-logo-{{ ai_gen_id }} {
+    flex-shrink: 0;
+  }
+
+  .ai-alma-payment-logo-{{ ai_gen_id }} img {
+    height: {{ block.settings.logo_height }}px;
+    width: auto;
+    display: block;
+  }
+
+  .ai-alma-payment-logo-placeholder-{{ ai_gen_id }} {
+    height: {{ block.settings.logo_height }}px;
+    width: {{ block.settings.logo_height | times: 2.5 }}px;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #999;
+  }
+
+  .ai-alma-payment-content-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .ai-alma-payment-title-{{ ai_gen_id }} {
+    margin: 0 0 {{ block.settings.title_spacing }}px;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+  }
+
+  .ai-alma-payment-options-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{ block.settings.option_spacing }}px;
+    align-items: center;
+  }
+
+  .ai-alma-payment-option-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    padding: {{ block.settings.option_padding }}px {{ block.settings.option_padding | times: 1.5 }}px;
+    background-color: {{ block.settings.option_background }};
+    color: {{ block.settings.option_text_color }};
+    border-radius: {{ block.settings.option_border_radius }}px;
+    font-size: {{ block.settings.option_text_size }}px;
+    font-weight: 500;
+    border: 1px solid {{ block.settings.option_border_color }};
+  }
+
+  .ai-alma-payment-icon-{{ ai_gen_id }} {
+    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-alma-payment-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-alma-payment-container-{{ ai_gen_id }} {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .ai-alma-payment-logo-{{ ai_gen_id }} {
+      margin-bottom: 8px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-alma-payment-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-alma-payment-container-{{ ai_gen_id }}">
+    <div class="ai-alma-payment-logo-{{ ai_gen_id }}">
+      {% if block.settings.logo %}
+        <img
+          src="{{ block.settings.logo | image_url: height: 100 }}"
+          alt="Alma"
+          loading="lazy"
+          width="{{ block.settings.logo.width }}"
+          height="{{ block.settings.logo.height }}"
+        >
+      {% else %}
+        <div class="ai-alma-payment-logo-placeholder-{{ ai_gen_id }}">
+          ALMA
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="ai-alma-payment-content-{{ ai_gen_id }}">
+      {% if block.settings.title != blank %}
+        <div class="ai-alma-payment-title-{{ ai_gen_id }}">
+          {{ block.settings.title }}
+        </div>
+      {% endif %}
+
+      <div class="ai-alma-payment-options-{{ ai_gen_id }}">
+        {% if block.settings.show_x2 %}
+          <div class="ai-alma-payment-option-{{ ai_gen_id }}">
+            <svg class="ai-alma-payment-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            {{ block.settings.x2_label }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.show_x3 %}
+          <div class="ai-alma-payment-option-{{ ai_gen_id }}">
+            <svg class="ai-alma-payment-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            {{ block.settings.x3_label }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.show_x4 %}
+          <div class="ai-alma-payment-option-{{ ai_gen_id }}">
+            <svg class="ai-alma-payment-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            {{ block.settings.x4_label }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.show_x10 %}
+          <div class="ai-alma-payment-option-{{ ai_gen_id }}">
+            <svg class="ai-alma-payment-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            {{ block.settings.x10_label }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.show_delivery %}
+          <div class="ai-alma-payment-option-{{ ai_gen_id }}">
+            <svg class="ai-alma-payment-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            {{ block.settings.delivery_label }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Paiement Alma",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Alma"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Hauteur du logo",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Contenu"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Paiement en plusieurs fois"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Taille du titre",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Espacement titre",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Options de paiement"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_x2",
+      "label": "Afficher 2x",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "x2_label",
+      "label": "Libellé 2x",
+      "default": "2x"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_x3",
+      "label": "Afficher 3x",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "x3_label",
+      "label": "Libellé 3x",
+      "default": "3x"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_x4",
+      "label": "Afficher 4x",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "x4_label",
+      "label": "Libellé 4x",
+      "default": "4x"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_x10",
+      "label": "Afficher 10x",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "x10_label",
+      "label": "Libellé 10x",
+      "default": "10x"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery",
+      "label": "Afficher paiement à la livraison",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "delivery_label",
+      "label": "Libellé livraison",
+      "default": "À la livraison"
+    },
+    {
+      "type": "header",
+      "content": "Style des options"
+    },
+    {
+      "type": "range",
+      "id": "option_text_size",
+      "label": "Taille du texte",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "option_padding",
+      "label": "Padding",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "option_border_radius",
+      "label": "Arrondi",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "option_spacing",
+      "label": "Espacement entre options",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "option_background",
+      "label": "Fond des options",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "option_text_color",
+      "label": "Couleur du texte",
+      "default": "#272c30"
+    },
+    {
+      "type": "color",
+      "id": "option_border_color",
+      "label": "Couleur de bordure",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "header",
+      "content": "Style du bloc"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largeur desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "label": "Espacement logo/contenu",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Arrondi",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Épaisseur bordure",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Fond",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Couleur du texte",
+      "default": "#272c30"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Couleur de bordure",
+      "default": "#e5e5e5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Paiement Alma"
+    }
+  ]
+}
+{% endschema %}

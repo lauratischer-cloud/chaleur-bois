@@ -1,0 +1,49 @@
+{% assign count_review = 0  %}
+{% assign tmp_total_review = 0  %}
+{% assign tmp_total_review = 0  %}
+{% assign average_review = 0  %}
+{% assign best_review = 0  %}
+
+{% assign count_1 = 0  %}
+{% assign count_2 = 0  %}
+{% assign count_3 = 0  %}
+{% assign count_4 = 0  %}
+{% assign count_5 = 0  %}
+
+{% assign reviews = product.metafields.reviews  %}
+{% if shop.locale != "fr"  %}
+{% assign lang = "avisgarantis_" | append: shop.locale  %}
+{% else %}
+{% assign lang = "avisgarantis"  %}
+{% endif %}
+
+{% for review in reviews[lang]  %}
+	{% assign count_review = count_review | plus: 1 %}
+   {% if review.review_rating == '1' %}
+      {% assign count_1 = count_1 | plus: 1  %}
+   {% endif  %}
+   {% if review.review_rating == '2' %}
+      {% assign count_2 = count_2 | plus: 1  %}
+   {% endif  %}
+   {% if review.review_rating == '3' %}
+      {% assign count_3 = count_3 | plus: 1  %}
+   {% endif  %}
+   {% if review.review_rating == '4' %}
+      {% assign count_4 = count_4 | plus: 1  %}
+   {% endif  %}
+   {% if review.review_rating == '5' %}
+      {% assign count_5 = count_5 | plus: 1  %}
+   {% endif  %}
+
+	{% assign tmp_total_review = tmp_total_review | plus: review.review_rating %}
+  {% assign tmp_review = review.review_rating | plus: 0 %}
+
+   {% if tmp_review >=  best_review %}
+      {% assign best_review = tmp_review  %}
+   {% endif  %}
+{% endfor %}
+{% assign count_review_float = count_review | times: 1.0 %}
+{% assign average_review =  tmp_total_review | divided_by: count_review_float | round: 1 %}
+{% if shop.metafields.avisgarantis.productWidget == 'enable' %}
+<div class="grc-product-reviews" data-product-id="{{product.id | json}}"></div>
+{% endif %}

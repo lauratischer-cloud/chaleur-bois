@@ -1,0 +1,553 @@
+{% doc %}
+  @prompt
+    Produits associés et complémentaire dans les recommandations Search & discovery.
+    Reprend les classes du thème natif (product-card, product-card__content, etc.)
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-recommendations-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-product-recommendations__container-{{ ai_gen_id }} {
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-product-recommendations__header-{{ ai_gen_id }} {
+    margin-bottom: 32px;
+  }
+
+  .ai-product-recommendations__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    margin: 0;
+    color: {{ block.settings.heading_color }};
+    text-align: {{ block.settings.heading_alignment }};
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    {% comment %} gap: {{ block.settings.grid_gap }}px; {% endcomment %}
+     gap: 0;
+  }
+
+  /* Surcharge pour que product-card s'affiche bien en bloc */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} product-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.grid_gap }}px;
+    border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    background-color: {{ block.settings.card_background }};
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__content:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Image */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__image-wrapper img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__placeholder-image {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__placeholder-image svg {
+    width: 60%; height: 60%; opacity: 0.3;
+  }
+
+  /* Infos */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__info {
+    padding: 20px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  /* Badge type (ex: Bouilleur) */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__type-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    background-color: #272c30;
+    padding: 3px 8px;
+    border-radius: 4px;
+    width: fit-content;
+    margin-bottom: 2px;
+  }
+
+  /* Vendor */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__vendor {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: {{ block.settings.vendor_color }};
+    margin: 0;
+  }
+
+  /* Titre produit */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__title {
+    font-size: 1rem;
+    font-family: var(--font-body--family);
+    margin: 0;
+    color: {{ block.settings.product_title_color }};
+    line-height: 1.4;
+  }
+
+  /* Catégorie */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__collection {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+    color: {{ block.settings.vendor_color }};
+    margin: 0;
+  }
+
+  /* Prix */
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__price {
+    font-family: var(--font-body--family);
+    font-weight: 300;
+    font-size: 1.125rem;
+  color: #497354!important;
+    margin-top: 4px;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__price--compare {
+    text-decoration: line-through;
+    opacity: 0.6;
+    margin-right: 8px;
+  }
+
+  /* Livraison gratuite */
+  {% comment %} .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__free-shipping {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2a7a2a;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ai-product-recommendations__grid-{{ ai_gen_id }} .product-card__free-shipping::before {
+    content: "✓";
+    font-weight: 700;
+  } {% endcomment %}
+
+  @media screen and (max-width: 989px) {
+    .ai-product-recommendations__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-recommendations__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-product-recommendations__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.75 }}px;
+    }
+  }
+{% endstyle %}
+
+<product-recommendations-{{ ai_gen_id }}
+  class="ai-product-recommendations-{{ ai_gen_id }} width1440 product-recommendations"
+  {% comment %} data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.products_to_show }}&intent={{ block.settings.recommendation_intent }}" {% endcomment %}
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=50&intent={{ block.settings.recommendation_intent }}"
+
+  {{ block.shopify_attributes }}
+>
+  {% if recommendations.performed and recommendations.products_count > 0 %}
+    <div class="ai-product-recommendations__container-{{ ai_gen_id }} width1440">
+      {% if block.settings.heading != blank %}
+        <div class="ai-product-recommendations__header-{{ ai_gen_id }}">
+          <h2 class="ai-product-recommendations__title-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+        </div>
+      {% endif %}
+
+      <div class="ai-product-recommendations__grid-{{ ai_gen_id }}">
+        {% for product in recommendations.products %}
+
+          {%- comment -%} Récupération du metafield type {%- endcomment -%}
+          {% comment %} {% assign product_type = product.metafields.custom.type %} {% endcomment %}
+           {% assign product_type = product.metafields.custom.type.value %}
+
+          <product-card
+            class="product-card size-style"
+            data-product-id="{{ product.id }}"
+            style="position: relative; display: flex; flex-direction: column;"
+          >
+            
+             <a href="{{ product.url }}"
+              class="product-card__link"
+              aria-label="{{ product.title | escape }}"
+            >
+              <span class="visually-hidden">{{ product.title }}</span>
+            </a>
+
+            <div class="product-card__content layout-panel-flex layout-panel-flex--column product-grid__card border-style gap-style">
+
+              {%- comment -%} Image {%- endcomment -%}
+              <div class="product-card__image-wrapper">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="600"
+                  >
+                {% else %}
+                  <div class="product-card__placeholder-image">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+              </div>
+
+              {%- comment -%} Infos textuelles {%- endcomment -%}
+              <div class="product-card__info">
+
+                {%- comment -%} Vendor {%- endcomment -%}
+                {% if block.settings.show_vendor and product.vendor != blank %}
+                  <p class="product-card__vendor">{{ product.vendor }}</p>
+                {% endif %}
+
+                {%- comment -%} Badge type (ex: Bouilleur) au-dessus du titre {%- endcomment -%}
+                {% if product_type != blank %}
+                  <span class="product-card__type-badge">{{ product_type }}</span>
+                {% endif %}
+
+                {%- comment -%} Titre produit {%- endcomment -%}
+                <h3 class="product-card__title">{{ product.title }}</h3>
+
+                {%- comment -%} Catégorie sous le titre {%- endcomment -%}
+                {% if product.type != blank %}
+                  <p class="product-card__collection">{{ product.type }}</p>
+                {% endif %}
+
+                {%- comment -%} Prix {%- endcomment -%}
+                {% if block.settings.show_price %}
+                  <div class="product-card__price">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                    <span>{{ product.price | money }}</span>
+                  </div>
+
+                  {%- comment -%} Livraison gratuite si prix >= 500€ {%- endcomment -%}
+                  {% if product.price >= 50000 %}
+                   <div class="produit-livraison">
+                   <img src="https://cdn.shopify.com/s/files/1/0997/2577/1095/files/picto-livraison.svg?v=1772960367" />
+                    Livraison gratuite</div>
+                  {% endif %}
+                {% endif %}
+
+              </div>
+            </div>
+          </product-card>
+
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</product-recommendations-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductRecommendations{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        const handleIntersection = (entries, observer) => {
+          if (!entries[0].isIntersecting) return;
+          observer.unobserve(this);
+
+          fetch(this.dataset.url)
+            .then(response => response.text())
+            .then(text => {
+              const html = document.createElement('div');
+              html.innerHTML = text;
+              const recommendations = html.querySelector('product-recommendations-{{ ai_gen_id }}');
+
+              if (recommendations && recommendations.innerHTML.trim().length) {
+                this.innerHTML = recommendations.innerHTML;
+
+                // 🔀 Shuffle parmi la liste complète, affiche seulement 4
+                const grid = this.querySelector('.ai-product-recommendations__grid-{{ ai_gen_id }}');
+                if (grid) {
+                  const cards = Array.from(grid.children);
+
+                  // Fisher-Yates shuffle
+                  for (let i = cards.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [cards[i], cards[j]] = [cards[j], cards[i]];
+                  }
+
+                  // Réinjecter uniquement les 4 premiers après shuffle
+                  grid.innerHTML = '';
+                  cards.slice(0, 4).forEach(card => grid.appendChild(card));
+                }
+              }
+            })
+            .catch(e => {
+              console.error(e);
+            });
+        };
+
+        new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 200px 0px'}).observe(this);
+      }
+    }
+
+    customElements.define('product-recommendations-{{ ai_gen_id }}', ProductRecommendations{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Produits recommandés",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenu"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Vous aimerez aussi"
+    },
+    {
+      "type": "select",
+      "id": "recommendation_intent",
+      "label": "Type de recommandations",
+      "options": [
+        { "value": "related", "label": "Produits associés" },
+        { "value": "complementary", "label": "Produits complémentaires" }
+      ],
+      "default": "related",
+      "info": "Basé sur Search & Discovery"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Nombre de produits",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Afficher le vendeur",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Afficher le prix",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Mise en page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Colonnes sur ordinateur",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Colonnes sur tablette",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Colonnes sur mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Espacement de la grille",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Espacement haut",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Espacement bas",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Style du titre"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Taille du titre",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alignement du titre",
+      "options": [
+        { "value": "left", "label": "Gauche" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Droite" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Couleur du titre",
+      "default": "#272c30"
+    },
+    {
+      "type": "header",
+      "content": "Style des cartes"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Fond de carte",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Épaisseur de bordure",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Couleur de bordure",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Arrondi des coins",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "vendor_color",
+      "label": "Couleur du vendeur",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Couleur du titre produit",
+      "default": "#272c30"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Couleur du prix",
+      "default": "#272c30"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produits recommandés"
+    }
+  ]
+}
+{% endschema %}

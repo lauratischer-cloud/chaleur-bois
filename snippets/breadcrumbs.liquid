@@ -1,0 +1,63 @@
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' or page.handle == 'catalogue' %}
+
+{% if template == 'product' %}
+  {% assign current_collection = collection %}
+  {% if current_collection == blank %}
+    {% assign current_collection = product.collections | sort: 'handle' | first %}
+  {% endif %}
+{% endif %}
+
+<nav class="breadcrumb width1440" role="navigation" aria-label="breadcrumbs">
+  <ol>
+    <li><a href="/"><img src="https://cdn.shopify.com/s/files/1/0997/2577/1095/files/home.svg?v=1773175526" /></a></li>
+
+    {% if template == 'collection' %}
+      <li aria-current="page">{{ collection.title }}</li>
+
+    {% elsif template == 'product' %}
+      {% if current_collection %}
+        <li><a href="{{ current_collection.url }}">{{ current_collection.title }}</a></li>
+      {% endif %}
+      <li aria-current="page">{{ product.title }}</li>
+
+    {% elsif template == 'page' %}
+      <li aria-current="page">{{ page.title }}</li>
+
+    {% elsif template == 'blog' %}
+      <li aria-current="page">{{ blog.title }}</li>
+
+    {% elsif template == 'article' %}
+      <li><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+      <li aria-current="page">{{ article.title }}</li>
+    {% endif %}
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "{{ shop.url }}" }
+    {% if template == 'collection' %}
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ collection.title | escape }}", "item": "{{ shop.url }}{{ collection.url }}" }
+    {% elsif template == 'product' %}
+      {% if current_collection %}
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ current_collection.title | escape }}", "item": "{{ shop.url }}{{ current_collection.url }}" }
+    ,{ "@type": "ListItem", "position": 3, "name": "{{ product.title | escape }}" }
+      {% else %}
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ product.title | escape }}" }
+      {% endif %}
+    {% elsif template == 'page' %}
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ page.title | escape }}", "item": "{{ shop.url }}{{ page.url }}" }
+    {% elsif template == 'blog' %}
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ blog.title | escape }}", "item": "{{ shop.url }}{{ blog.url }}" }
+    {% elsif template == 'article' %}
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ blog.title | escape }}", "item": "{{ shop.url }}{{ blog.url }}" }
+    ,{ "@type": "ListItem", "position": 3, "name": "{{ article.title | escape }}" }
+    {% endif %}
+  ]
+}
+</script>
+
+{% endunless %}

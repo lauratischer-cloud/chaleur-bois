@@ -1,0 +1,22 @@
+{% if product %}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ ecommerce: null });
+  window.dataLayer.push({
+    event: 'view_item',
+    ecommerce: {
+      currency: {{ shop.currency | json }},
+      value: {{ product.selected_or_first_available_variant.price | divided_by: 100.0 }},
+      items: [{
+        item_id: {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+        item_name: {{ product.title | json }},
+        item_brand: {{ product.vendor | json }},
+        item_category: {{ product.type | json }},
+        item_variant: {{ product.selected_or_first_available_variant.title | json }},
+        price: {{ product.selected_or_first_available_variant.price | divided_by: 100.0 }},
+        quantity: 1
+      }]
+    }
+  });
+</script>
+{% endif %}
