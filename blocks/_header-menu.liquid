@@ -404,8 +404,17 @@
 
   /* Show the submenus on hover */
   .menu-list__list-item:has([aria-expanded='true']) > .menu-list__submenu,
+  /* Show the submenu directly via CSS as soon as the pointer or keyboard focus
+     reaches the item, instead of waiting for JavaScript to run first (set
+     aria-expanded, measure height, etc). JS still runs alongside for the
+     precise height/underlay sizing and for accessibility state, but the menu
+     no longer depends on it just to become visible — so it keeps opening
+     promptly even if the page's main thread is busy with something else
+     (a slow extension, a heavy script) for a moment. */
+  .menu-list__list-item:not([slot='overflow']):where(:hover, :focus-within) > .menu-list__submenu,
   /* Show the overflow menu when a menu item is hovered */
   .overflow-menu:has([slot="overflow"] [aria-expanded='true'])::part(overflow-list),
+  .overflow-menu:has([slot="overflow"]:where(:hover, :focus-within))::part(overflow-list),
   /* Keep the submenus open when they are hovered */
   .menu-list__submenu:is(:hover),
   .overflow-menu::part(overflow):hover {
@@ -460,7 +469,8 @@
       padding-block: 0;
     }
 
-    .menu-list__link[aria-expanded='true'] + .menu-list__submenu {
+    .menu-list__link[aria-expanded='true'] + .menu-list__submenu,
+    &:where(:hover, :focus-within) .menu-list__submenu {
       visibility: visible;
     }
   }
