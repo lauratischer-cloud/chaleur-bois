@@ -1,0 +1,457 @@
+.article-3 .blog--article {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* ── Article header ── */
+    .article-3 .blog--article__label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin-bottom: 14px;
+    }
+   .article-3  .blog--article__title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 700;
+      line-height: 1.18;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+    .article-3 .blog--article__date {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 28px;
+    }
+
+    /* ── Hero image ── */
+    .article-3 .blog--article__hero {
+      width: 100%;
+      border-radius: 4px;
+      margin-bottom: 40px;
+      display: block;
+    }
+
+    /* ── Article body ── */
+    .article-3 .blog--article__body p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .article-3 .blog--article__body strong { font-weight: 700; color: #1a1a1a; }
+    .article-3 .blog--article__body h2 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 52px 0 12px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e5e5e5;
+      line-height: 1.25;
+    }
+    .article-3 .blog--article__body h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 32px 0 10px;
+    }
+
+    /* ── Stats banner ── */
+    .article-3 .blog--stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: #e5e5e5;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 36px 0;
+    }
+    .article-3 .blog--stats__item {
+      background: #fff;
+      padding: 28px 12px;
+      text-align: center;
+    }
+    .article-3 .blog--stats__value {
+      font-family: Georgia, serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .article-3 .blog--stats__label {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* ── Encart intro ── */
+    .article-3 .blog--intro-block {
+      border-left: 4px solid #1a1a1a;
+      padding: 20px 26px;
+      background: #f5f5f5;
+      border-radius: 0 4px 4px 0;
+      margin-bottom: 44px;
+    }
+    .article-3 .blog--intro-block p { font-size: 17px; line-height: 1.7; color: #333; margin-bottom: 0; }
+
+    /* ── Encart distributeur (fond noir) ── */
+    .article-3 .blog--brand-block {
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 4px;
+      padding: 28px 32px;
+      margin: 36px 0;
+    }
+    .article-3 .blog--brand-block__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 14px;
+    }
+    .article-3 .blog--brand-block p {
+      font-size: 15px;
+      color: #ccc;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+    .article-3 .blog--brand-block p:last-child { margin-bottom: 0; }
+    .article-3 .blog--brand-block strong { color: #fff; }
+
+    /* ── Encart info (fond gris clair) ── */
+    .article-3 .blog--info-block {
+      background: #f5f5f5;
+      border-left: 4px solid #1a1a1a;
+      border-radius: 0 4px 4px 0;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+    .article-3 .blog--info-block p { margin-bottom: 8px; color: #333; font-size: 15px; }
+    .article-3 .blog--info-block p:last-child { margin-bottom: 0; }
+
+    /* ── Tableau bois ── */
+    .article-3 .blog--table-wrap { overflow-x: auto; margin: 28px 0; border: 1px solid #e5e5e5; border-radius: 4px; }
+    .article-3 .blog--table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .article-3 .blog--table thead { background: #1a1a1a; }
+    .article-3 .blog--table thead th { padding: 12px 14px; text-align: left; font-size: 13px; font-weight: 600; color: #fff; letter-spacing: .03em; }
+    .article-3 .blog--table tbody tr { border-bottom: 1px solid #e5e5e5; }
+    .article-3 .blog--table tbody tr:last-child { border-bottom: none; }
+    .article-3 .blog--table tbody tr:nth-child(even) { background: #f9f9f9; }
+    .article-3 .blog--table tbody tr:hover { background: #f0f0f0; }
+    .article-3 .blog--table tbody td { padding: 12px 14px; vertical-align: middle; color: #333; }
+    .article-3 .blog--table tbody td:first-child { font-weight: 700; color: #1a1a1a; }
+    .article-3 .blog--table__stars { font-size: 12px; letter-spacing: -1px; color: #1a1a1a; }
+
+    /* ── Grille séchage ── */
+    .article-3 .blog--sechage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .article-3 .blog--sechage-card {
+      border-radius: 4px;
+      padding: 18px 14px;
+      text-align: center;
+      border: 1px solid #e5e5e5;
+      background: #fff;
+    }
+    .article-3 .blog--sechage-card--ok { border-color: #1a1a1a; background: #f5f5f5; }
+    .article-3 .blog--sechage-card--warn { border-color: #999; background: #fafafa; }
+    .article-3 .blog--sechage-card--bad { border-color: #bbb; background: #f9f9f9; }
+    .article-3 .blog--sechage__icon { font-size: 26px; margin-bottom: 8px; }
+    .article-3 .blog--sechage__period {
+      font-family: Georgia, serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+    .article-3 .blog--sechage__label { font-size: 12px; color: #666; line-height: 1.4; }
+
+    /* ── Checklist ── */
+    .article-3 .blog--checklist { list-style: none; margin: 18px 0 24px; padding: 0; }
+    .article-3 .blog--checklist li {
+      padding: 10px 0 10px 28px;
+      position: relative;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #333;
+    }
+    .article-3 .blog--checklist li:last-child { border-bottom: none; }
+    .article-3 .blog--checklist li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    /* ── Calcul stères ── */
+    .article-3 .blog--calc-block {
+      background: #fff;
+      border: 2px solid #1a1a1a;
+      border-radius: 4px;
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .article-3 .blog--calc-block h3 { margin-top: 0; margin-bottom: 16px; }
+    .article-3 .blog--calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 15px;
+      gap: 12px;
+    }
+    .article-3 .blog--calc-row:last-child { border-bottom: none; }
+    .article-3 .blog--calc-row__lbl { color: #555; }
+    .article-3 .blog--calc-row__val { font-weight: 700; color: #1a1a1a; white-space: nowrap; }
+    .article-3 .blog--calc-row--total .blog--calc-row__lbl { font-weight: 700; color: #1a1a1a; }
+    .article-3 .blog--calc-row--total .blog--calc-row__val { font-family: Georgia, serif; font-size: 18px; }
+
+    /* ── Product strip ── */
+    .article-3 .blog--product-strip {
+      background: #f5f5f5;
+      border-radius: 4px;
+      padding: 24px 28px;
+      margin: 36px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .article-3 .blog--product-strip h3 { margin: 0 0 6px; font-size: 16px; }
+    .article-3 .blog--product-strip p { margin: 0; font-size: 14px; color: #666; }
+    .article-3  .blog--product-strip__btn {
+      display: inline-block;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 13px 22px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: opacity .2s;
+    }
+    .article-3 .blog--product-strip__btn:hover { opacity: .8; }
+
+    /* ── Section fendeuses ── */
+    .article-3 .blog--fendeuses {
+      background: #f5f5f5;
+      border-radius: 4px;
+      padding: 36px 32px;
+      margin: 48px 0;
+    }
+    .article-3 .blog--fendeuses h2 {
+      margin-top: 0;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      color: #1a1a1a;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e5e5e5;
+      margin-bottom: 12px;
+    }
+    .article-3 .blog--fendeuses__subtitle { color: #666; font-size: 14px; margin-bottom: 24px; }
+
+    /* ── Types fendeuse ── */
+    .article-3 .blog--type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .article-3 .blog--type-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 18px;
+    }
+    .article-3 .blog--type-card__icon { font-size: 24px; margin-bottom: 8px; }
+    .article-3 .blog--type-card__title { font-weight: 700; color: #1a1a1a; font-size: 15px; margin-bottom: 6px; }
+    .article-3 .blog--type-card__desc { font-size: 13px; color: #666; line-height: 1.5; }
+    .article-3 .blog--type-card__ideal { font-size: 12px; font-weight: 600; color: #1a1a1a; margin-top: 8px; }
+
+    /* ── Grille produits fendeuses ── */
+    .article-3 .blog--fendeuse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .article-3 .blog--fendeuse-card {
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #e5e5e5;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .article-3 .blog--fendeuse-card__img {
+      height: 120px;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .article-3 .blog--fendeuse-card__badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .article-3 .blog--fendeuse-card__body {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .article-3 .blog--fendeuse-card__brand {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: #888;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .article-3 .blog--fendeuse-card__name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .article-3 .blog--fendeuse-card__desc {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      flex: 1;
+    }
+    .article-3 .blog--fendeuse-card__specs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+    .article-3 .blog--fendeuse-card__spec {
+      background: #f0f0f0;
+      color: #1a1a1a;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+    .article-3  .blog--fendeuse-card__btn {
+      display: block;
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity .2s;
+    }
+    .article-3 .blog--fendeuse-card__btn:hover { opacity: .8; }
+
+    /* ── Encart local ── */
+    .article-3  .blog--local-block {
+      background: #1a1a1a;
+      border-radius: 4px;
+      padding: 32px 36px;
+      margin: 44px 0;
+      border-left: 5px solid #555;
+    }
+    .article-3 .blog--local-block__tag {
+      display: inline-block;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+    .article-3 .blog--local-block h3 { color: #fff; margin-top: 0; font-size: 17px; margin-bottom: 12px; }
+    .article-3 .blog--local-block p { color: #ccc; margin-bottom: 10px; font-size: 15px; }
+    .article-3 .blog--local-block p:last-child { margin-bottom: 0; }
+    .article-3 .blog--local-block strong { color: #fff; }
+
+    /* ── FAQ ── */
+    .article-3 .blog--faq__item { border-bottom: 1px solid #e5e5e5; padding: 22px 0; }
+    .article-3 .blog--faq__item:first-of-type { border-top: 1px solid #e5e5e5; }
+    .article-3 .blog--faq__question { font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px; }
+    .article-3 .blog--faq__answer { font-size: 15px; color: #555; line-height: 1.65; }
+
+    /* ── CTA final ── */
+    .article-3 .blog--cta {
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 6px;
+      padding: 48px 40px;
+      text-align: center;
+      margin: 52px 0 0;
+    }
+    .article-3 .blog--cta h2 {
+      font-family: Georgia, serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+      border: none;
+      padding: 0;
+    }
+    .article-3 .blog--cta p { font-size: 16px; color: #bbb; margin-bottom: 28px; }
+    .article-3 .blog--cta__buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .article-3 .blog--cta__btn {
+      display: inline-block;
+      background: #fff;
+      color: #1a1a1a;
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: opacity .2s;
+    }
+    .article-3 .blog--cta__btn:hover { opacity: .85; }
+    .article-3 .blog--cta__btn--outline {
+      display: inline-block;
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.4);
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: border-color .2s;
+    }
+    .article-3 .blog--cta__btn--outline:hover { border-color: #fff; }
+
+    /* ── Back link ── */
+    .article-3 .blog--back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: #888;
+      margin-top: 48px;
+    }
+    .article-3 .blog--back:hover { color: #1a1a1a; }
