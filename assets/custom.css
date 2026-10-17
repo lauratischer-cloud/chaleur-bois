@@ -455,3 +455,9 @@
       margin-top: 48px;
     }
     .article-3 .blog--back:hover { color: #1a1a1a; }
+
+
+    .classe-du-bloc,
+.classe-du-bloc * {
+  font-size: 0.9rem;
+}
