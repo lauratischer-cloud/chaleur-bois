@@ -6500,3 +6500,8 @@ product-price .price {
       .article2 .blog--reassurance__grid { grid-template-columns: 1fr; }
       .article2 .blog--footer__inner { grid-template-columns: 1fr; }
     }
+
+    .classe-du-bloc,
+.classe-du-bloc * {
+  font-size: 0.9rem !important;
+}
