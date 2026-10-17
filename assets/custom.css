@@ -457,4 +457,7 @@
     .article-3 .blog--back:hover { color: #1a1a1a; }
 
 
-    
+.product-dispo,
+.product-dispo * {
+  font-size: 0.9rem !important;
+}
