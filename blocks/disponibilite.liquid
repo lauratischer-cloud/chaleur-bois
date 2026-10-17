@@ -1,0 +1,63 @@
+{%- liquid
+  assign product_resource = closest.product | default: product
+  assign dispo = product_resource.metafields.custom.disponibilite
+-%}
+
+{%- if dispo.value != blank -%}
+  <div class="product-dispo" {{ block.shopify_attributes }}>
+    <span class="product-dispo__icon" aria-hidden="true"></span>
+    <span class="product-dispo__label">{{ block.settings.label }}</span>
+    <span class="product-dispo__value">{{ dispo | metafield_tag }}</span>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-dispo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.6rem;
+    padding: 0.8rem 1.2rem;
+    background: #f5f0e8;
+    border-left: 4px solid #d4853a;
+    border-radius: 4px;
+    color: #2b1a0e;
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+  .product-dispo__icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: #d4853a;
+    flex-shrink: 0;
+  }
+  .product-dispo__label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 1.2rem;
+  }
+  .product-dispo__value,
+  .product-dispo__value p {
+    margin: 0;
+    font-weight: 600;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Disponibilité",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Libellé",
+      "default": "Disponibilité"
+    }
+  ],
+  "presets": [
+    { "name": "Disponibilité" }
+  ]
+}
+{% endschema %}
